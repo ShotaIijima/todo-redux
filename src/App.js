@@ -22,6 +22,10 @@ export default class App extends Component {
             this.setState({ err_msg: 'タイトルを入力してください' })
             return
         }
+        if (this.state.todos.some(todo => (todo.title === title))) {
+            this.setState({ err_msg: 'すでに同じタイトルが存在します' })
+            return
+        }
         const desc = e.target.elements[1].value
         const new_todo = {
             key: this.state.todos.length + 1,
@@ -30,7 +34,7 @@ export default class App extends Component {
             done: null
         }
         this.setState({
-            todos: this.state.todos.concat(new_todo),
+            todos: [...this.state.todos, new_todo],
             success_msg: `${title}を追加しました`
         })
         e.target.elements[0].value = ''
